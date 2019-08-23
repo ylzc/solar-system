@@ -8,6 +8,9 @@
   "private": true,
   "workspaces": [
     "sun",
-    "earth"
+    "earth",
+    "moon",
+    "mercury",
+    "planet"
   ]
 }
