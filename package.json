@@ -5,5 +5,8 @@
   "repository": "https://github.com/ylzc/solar-system",
   "author": "none",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "sun"
+  ]
 }
