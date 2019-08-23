@@ -30,7 +30,9 @@ class DB {
 			JSON.stringify(this.data),
 			{},
 			(err) => {
-				if (err) console.log(err);
+				if (err) {
+					console.log(err);
+				}
 			},
 		);
 		return value;
@@ -54,7 +56,7 @@ type target = string;
 
 function needProxy(req): Promise<target> {
 	return new Promise((resolve) => {
-		let res, p = req.baseUrl.split('/');
+		let res, p = req._parsedUrl.pathname.split('/');
 		if (p.length) {
 			res = db.get(p[1]);
 		}
