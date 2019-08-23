@@ -1,15 +1,10 @@
-// const ws = require('ws');
-// const http = require('http');
-// const url = require('url');
 import * as express from 'express';
 import * as compression from 'compression';
 import * as helmet from 'helmet';
-// const session = require('express-session');
 import * as session from 'express-session';
-// const httpProxy = require('http-proxy');
-import * as httpProxy from 'http-proxy';
+import * as HttpProxy from 'http-proxy';
+import * as fs from 'file-system';
 
-const fs = require('file-system');
 const app = express();
 
 class DB {
@@ -67,7 +62,7 @@ function needProxy(req): Promise<target> {
 	});
 }
 
-const hp = new httpProxy({
+const hp = new HttpProxy({
 	ws: true,
 	changeOrigin: true,
 });
@@ -76,6 +71,8 @@ const parser = session({
 	saveUninitialized: true,
 	secret: 'sucsoft',
 });
+console.log('use helmet');
+app.use(helmet());
 console.log('use http-proxy');
 app.use(async (request, response, next) => {
 	let target = await needProxy(request);
@@ -98,8 +95,6 @@ app.use(async (request, response, next) => {
 });
 console.log('use body-parser');
 app.use(express.urlencoded({ extended: false }));
-console.log('use helmet');
-app.use(helmet());
 console.log('use compression');
 app.use(compression());
 console.log('use express-session');
