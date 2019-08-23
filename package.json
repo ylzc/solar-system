@@ -1,0 +1,9 @@
+{
+  "name": "solar-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ylzc/solar-system",
+  "author": "none",
+  "license": "MIT",
+  "private": true
+}

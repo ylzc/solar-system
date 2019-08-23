@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+package-lock.json
+.idea/
+dist/
+waterloo.db
+yarn.lock
+*.spec.ts
+test.js
+__tests__
