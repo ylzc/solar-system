@@ -1,0 +1,10 @@
+{
+  "name": "@solar-system/god",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/common": "^6.5.3",
+    "@solar-system/planet": "1.0.0"
+  }
+}

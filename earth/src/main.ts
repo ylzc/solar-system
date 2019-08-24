@@ -5,7 +5,7 @@ import {
 	NestExpressApplication,
 } from '@nestjs/platform-express';
 import express = require('express');
-import { Logger } from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
 
 const bootstrap = async () => {
 	const server = express();
@@ -19,6 +19,7 @@ const bootstrap = async () => {
 				logger: logger,
 			},
 		);
+	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	await app.listen(3535);
 	logger.log('Now Earth start on 3535');
 };

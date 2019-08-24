@@ -5,6 +5,8 @@
   "main": "src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "@nestjs/platform-express": "^6.5.3"
+    "@nestjs/platform-express": "^6.5.3",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.10.0"
   }
 }

@@ -3,13 +3,21 @@ import {
 	Entity,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
-	CreateDateColumn, ManyToOne,
+	CreateDateColumn,
+	ManyToOne,
+	BeforeUpdate, Generated,
 } from 'typeorm';
 import { PhoneEntity } from './phone.entity';
 import { SexEnum } from '@solar-system/planet';
+import crypto = require('crypto');
+import { Expose } from 'class-transformer';
 
 @Entity()
 export class UserEntity {
+
+	constructor(partial: Partial<UserEntity>) {
+		Object.assign(this, partial);
+	}
 
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
@@ -22,6 +30,28 @@ export class UserEntity {
 
 	@Column()
 	lastName: string;
+
+	@Expose()
+	get fullName(): string {
+		return `${this.firstName} ${this.lastName}`;
+	}
+
+	@Expose()
+	@Column()
+	password: string;
+
+	@Expose()
+	@Column()
+	@Generated('uuid')
+	salt: string;
+
+	@BeforeUpdate()
+	updatePassword() {
+		this.password = crypto
+			.createHash('md5')
+			.update(this.password + ':' + this.salt)
+			.digest('hex');
+	}
 
 	@Column()
 	address: string;
@@ -71,6 +101,7 @@ export class UserEntity {
 	@Column({
 		type: 'enum',
 		enum: SexEnum,
+		default: SexEnum.unknown,
 	})
 	sex: SexEnum;
 
