@@ -12,7 +12,7 @@ class DB {
 
 	constructor() {
 		try {
-			let data = fs.readFileSync('./db.json').toString();
+			const data = fs.readFileSync('./db.json').toString();
 			this.data = JSON.parse(data);
 		} catch (e) {
 			this.data = {};
@@ -39,8 +39,9 @@ class DB {
 	}
 
 	all() {
-		let list = [];
-		for (let k in this.data) {
+		const list = [];
+		// tslint:disable-next-line:forin
+		for (const k in this.data) {
 			list.push({
 				prefix: k,
 				target: this.data[k],
@@ -50,13 +51,14 @@ class DB {
 	}
 }
 
-console.log('init db');
+console.log('Init db');
 const db = new DB();
 type target = string;
 
 function needProxy(req): Promise<target> {
 	return new Promise((resolve) => {
-		let res, p = req._parsedUrl.pathname.split('/');
+		let res = null;
+		const p = req._parsedUrl.pathname.split('/');
 		if (p.length) {
 			res = db.get(p[1]);
 		}
@@ -73,11 +75,11 @@ const parser = session({
 	saveUninitialized: true,
 	secret: 'sucsoft',
 });
-console.log('use helmet');
+console.log('Use helmet');
 app.use(helmet());
-console.log('use http-proxy');
+console.log('Use http-proxy');
 app.use(async (request, response, next) => {
-	let target = await needProxy(request);
+	const target = await needProxy(request);
 	if (target) {
 		hp.web(
 			request, response,
@@ -95,24 +97,24 @@ app.use(async (request, response, next) => {
 		next();
 	}
 });
-console.log('use body-parser');
+console.log('Use body-parser');
 app.use(express.urlencoded({ extended: false }));
-console.log('use compression');
+console.log('Use compression');
 app.use(compression());
-console.log('use express-session');
+console.log('Use express-session');
 app.use(parser);
-console.log('use dir ./public for static');
+console.log('Use dir ./public for static');
 app.use(express.static('public'));
 app.get('/center/add', (req, res) => {
-	let prefix = req.query.prefix;
-	let target = req.query.target;
+	const prefix = req.query.prefix;
+	const target = req.query.target;
 	if (prefix && target) {
 		db.set(prefix, target);
 		console.log(`/center/add ${prefix} => ${target}`);
 	}
 	res.json(req.query);
 });
-console.log('start server ...');
+console.log('Prepare Sun Center ...');
 app.listen(3434, () => {
-	console.log('now server is start at 3434');
+	console.log('Now Sun is start at 3434');
 });
