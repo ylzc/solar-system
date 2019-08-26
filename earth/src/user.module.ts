@@ -8,9 +8,7 @@ import { UserService } from './services/user.service';
 	imports: [
 		TypeOrmModule.forRoot({
 			type: 'postgres',
-			entities: [
-				...entities,
-			],
+			entities: entities,
 			username: 'postgres',
 			password: '',
 			schema: 'earth-user',

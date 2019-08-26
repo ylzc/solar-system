@@ -1,16 +1,14 @@
 import {
-	Column,
-	Entity,
-	PrimaryGeneratedColumn,
-	UpdateDateColumn,
-	CreateDateColumn,
-	ManyToOne,
-	BeforeUpdate, Generated,
+	Column, Entity, PrimaryGeneratedColumn,
+	UpdateDateColumn, CreateDateColumn,
+	ManyToOne, BeforeUpdate, Generated, OneToMany,
 } from 'typeorm';
-import { PhoneEntity } from './phone.entity';
+import { ContactEntity } from './contact.entity';
 import { SexEnum } from '@solar-system/planet';
 import crypto = require('crypto');
 import { Expose } from 'class-transformer';
+import { AddressEntity } from './address.entity';
+import { EndowmentEntity } from './endowment.entity';
 
 @Entity()
 export class UserEntity {
@@ -53,32 +51,26 @@ export class UserEntity {
 			.digest('hex');
 	}
 
-	@Column()
-	address: string;
-
-	@Column()
-	regionalismCode: string;
-
 	@Column({ unique: true, nullable: true })
 	idCardNumber: string;
 
-	@Column()
-	qq: string;
-
-	@Column()
-	weixin: string;
-
-	@ManyToOne(
-		type => PhoneEntity,
-		phone => phone.user,
+	@OneToMany(
+		type => AddressEntity,
+		address => address.user,
 	)
-	phones: PhoneEntity[];
+	addressList: AddressEntity[];
+
+	@OneToMany(
+		type => ContactEntity,
+		contact => contact.user,
+	)
+	contacts: ContactEntity[];
 
 	@Column()
 	description: string;
 
 	@Column()
-	remarks: string;
+	remarks: string; // 评价
 
 	@CreateDateColumn()
 	createTime: number;
@@ -89,8 +81,11 @@ export class UserEntity {
 	@Column('simple-array')
 	tags: string[];
 
-	@Column('simple-array')
-	endowments: any[]; // 资质
+	@OneToMany(
+		type => EndowmentEntity,
+		endowment => endowment.user,
+	)
+	endowments: EndowmentEntity[]; // 资质
 
 	@Column()
 	photo: string;
