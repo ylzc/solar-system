@@ -1,6 +1,10 @@
-import { Column, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+	Column, Entity, ManyToOne, OneToMany,
+	PrimaryColumn, PrimaryGeneratedColumn,
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 
+@Entity()
 export class AddressEntity {
 
 	@PrimaryGeneratedColumn('uuid')

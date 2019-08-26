@@ -1,6 +1,10 @@
-import { Column, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+	Column, Entity, ManyToOne, PrimaryColumn,
+	PrimaryGeneratedColumn,
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 
+@Entity()
 export class EndowmentEntity {
 
 	@PrimaryGeneratedColumn('uuid')
