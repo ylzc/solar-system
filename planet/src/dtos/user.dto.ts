@@ -1,50 +1,70 @@
 import { SexEnum } from '../enums';
-import { PhoneDto } from './phone.dto';
+import { ContactDto } from './contact.dto';
 import { IsEnum, IsNumberString, Length, Validate } from 'class-validator';
+import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { IsIdCard } from '../validates/IsIdCard';
+import { AddressDto } from './address.dto';
+import { EndowmentDto } from './endowment.dto';
 
 export class UserDto {
 
-	id?: string;
+	@ApiModelPropertyOptional()
+	readonly id?: string;
 
-	name?: string;
+	@ApiModelPropertyOptional()
+	readonly name?: string;
 
-	firstName: string;
+	@ApiModelProperty()
+	readonly firstName: string;
 
-	lastName: string;
+	@ApiModelProperty()
+	readonly lastName: string;
 
+	@ApiModelPropertyOptional()
 	password: string;
 
-	address?: string;
-
-	@IsNumberString()
-	regionalismCode?: string;
-
-	@Validate((idCard: any) => {
-		return true;
+	@ApiModelPropertyOptional()
+	@Validate(IsIdCard, {
+		message: '身份证号异常',
 	})
-	idCardNumber?: string;
+	readonly idCardNumber?: string;
 
-	@Length(5, 11)
-	@IsNumberString()
-	qq?: string;
+	@ApiModelPropertyOptional({
+		type: [AddressDto],
+	})
+	readonly addressList?: AddressDto[];
 
-	weixin?: string;
+	@ApiModelPropertyOptional({
+		type: [EndowmentDto],
+	})
+	readonly endowments?: EndowmentDto[];
 
-	phones?: PhoneDto[];
+	@ApiModelPropertyOptional({
+		type: [ContactDto],
+	})
+	readonly contacts?: ContactDto[];
 
-	description?: string;
+	@ApiModelPropertyOptional()
+	readonly description?: string;
 
-	remarks?: string;
+	@ApiModelPropertyOptional()
+	readonly remarks?: string;
 
-	tags?: string[];
+	@ApiModelPropertyOptional({
+		type: [String],
+	})
+	readonly tags?: string[];
 
-	endowments?: any[]; // 资质
+	@ApiModelPropertyOptional()
+	readonly photo?: string;
 
-	photo?: string;
+	@ApiModelPropertyOptional()
+	readonly nickname?: string;
 
-	nickname?: string;
-
+	@ApiModelProperty({
+		enum: SexEnum,
+	})
 	@IsEnum(SexEnum)
-	sex: SexEnum;
+	readonly sex: SexEnum;
 
 }

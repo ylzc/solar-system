@@ -2,20 +2,22 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
-	ManyToOne,
+	ManyToOne, PrimaryColumn,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 
 @Entity()
-export class PhoneEntity {
+export class ContactEntity {
 
 	@PrimaryGeneratedColumn('uuid')
-	id: number;
+	id: string;
 
-	@Column()
-	number: string;
+	@PrimaryColumn({
+		nullable: false,
+	})
+	code: string;
 
 	@Column()
 	description: string;
@@ -26,9 +28,14 @@ export class PhoneEntity {
 	@UpdateDateColumn()
 	updateTime: number;
 
+	@Column({
+		nullable: false,
+	})
+	type: string;
+
 	@ManyToOne(
 		type => UserEntity,
-		user => user.phones,
+		user => user.contacts,
 	)
 	user: UserEntity;
 }
