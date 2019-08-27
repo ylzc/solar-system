@@ -6,7 +6,7 @@ import {
 import { ContactEntity } from './contact.entity';
 import { SexEnum } from '@solar-system/planet';
 import crypto = require('crypto');
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { AddressEntity } from './address.entity';
 import { EndowmentEntity } from './endowment.entity';
 
@@ -29,16 +29,16 @@ export class UserEntity {
 	@Column()
 	lastName: string;
 
-	@Expose()
+	@Exclude()
 	get fullName(): string {
 		return `${this.firstName} ${this.lastName}`;
 	}
 
-	@Expose()
+	@Exclude()
 	@Column()
 	password: string;
 
-	@Expose()
+	@Exclude()
 	@Column()
 	@Generated('uuid')
 	salt: string;
