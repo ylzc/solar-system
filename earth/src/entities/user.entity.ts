@@ -162,4 +162,15 @@ export class UserEntity {
 	})
 	isDeleted: boolean;
 
+	@Column({
+		nullable: true,
+	})
+	age: number;
+
+	@Column({
+		type: 'timestamp',
+		nullable: true,
+	})
+	birthday: number;
+
 }
