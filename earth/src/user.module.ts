@@ -10,7 +10,7 @@ import { UserService } from './services/user.service';
 			type: 'postgres',
 			entities,
 			username: 'postgres',
-			password: '',
+			password: '123456',
 			schema: 'earth-user',
 			database: 'solar-system',
 			synchronize: true,

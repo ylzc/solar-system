@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@nestjs/common": "^6.5.3",
-    "@solar-system/planet": "1.0.0"
+    "@solar-system/planet": "1.0.0",
+    "axios": "^0.19.0"
   }
 }

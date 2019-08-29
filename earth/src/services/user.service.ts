@@ -16,4 +16,22 @@ export class UserService {
 		return await this.user.save(user);
 	}
 
+	async getUserById(id: string) {
+		return await this.user.findOne({
+			id,
+		});
+	}
+
+	async findUserForPage(pageNum: number = 1, pageSize: number = 10) {
+		let skip = (pageNum > 1 ? pageNum : 1) - 1;
+		return await this.user.findAndCount({
+			order: {
+				name: 'ASC',
+				id: 'DESC',
+			},
+			skip,
+			take: pageSize,
+		});
+	}
+
 }

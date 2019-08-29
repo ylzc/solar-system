@@ -2,11 +2,11 @@ import {
 	Body,
 	ClassSerializerInterceptor,
 	Controller,
-	Get,
-	Post,
+	Get, Param,
+	Post, Query,
 	UseInterceptors,
 } from '@nestjs/common';
-import { UserDto } from '@solar-system/planet';
+import { UserDto, PageDto } from '@solar-system/planet';
 import { UserService } from '../services/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
 
@@ -20,7 +20,22 @@ export class UserController {
 
 	@Post('add')
 	async addUser(@Body() user: UserDto) {
-		return await this.srv.save(user);
+		await this.srv.save(user);
+		return {
+			result: true,
+			code: 200,
+			message: '添加人员成功',
+		};
+	}
+
+	@Get(':id')
+	getUserById(@Param('id') id: string) {
+		return this.srv.getUserById(id);
+	}
+
+	@Get('/list')
+	findUserForPage(@Query() params: PageDto) {
+		return this.srv.findUserForPage(params.pageNum, params.pageSize);
 	}
 
 }
