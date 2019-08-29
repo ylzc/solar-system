@@ -28,14 +28,19 @@ export class UserController {
 		};
 	}
 
+	@Get('list')
+	async findUserForPage(@Query() params: PageDto) {
+		let [list, totalCount] = await this.srv.findUserForPage(params.pageNum, params.pageSize);
+		return {
+			...params,
+			list,
+			totalCount,
+		};
+	}
+
 	@Get(':id')
 	getUserById(@Param('id') id: string) {
 		return this.srv.getUserById(id);
-	}
-
-	@Get('/list')
-	findUserForPage(@Query() params: PageDto) {
-		return this.srv.findUserForPage(params.pageNum, params.pageSize);
 	}
 
 }

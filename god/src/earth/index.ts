@@ -5,6 +5,7 @@ export class EarthClient<T extends AxiosStatic> {
 
 	constructor(
 		private readonly $http: T,
+		// tslint:disable-next-line:no-empty
 	) {
 	}
 

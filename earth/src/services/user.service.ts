@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from '@solar-system/planet';
+import { TransformClassToPlain } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -22,6 +23,7 @@ export class UserService {
 		});
 	}
 
+	@TransformClassToPlain()
 	async findUserForPage(pageNum: number = 1, pageSize: number = 10) {
 		let skip = (pageNum > 1 ? pageNum : 1) - 1;
 		return await this.user.findAndCount({

@@ -20,7 +20,12 @@ const bootstrap = async () => {
 				logger: logger,
 			},
 		);
-	app.useGlobalPipes(new ValidationPipe({ transform: true }));
+	app.useGlobalPipes(new ValidationPipe({
+		transform: true,
+		transformOptions: {
+			strategy: 'excludeAll',
+		},
+	}));
 	SwaggerModule.setup(
 		'api',
 		app,

@@ -9,6 +9,7 @@ import crypto = require('crypto');
 import { Exclude, Expose } from 'class-transformer';
 import { AddressEntity } from './address.entity';
 import { EndowmentEntity } from './endowment.entity';
+import { getRandomString } from '@solar-system/planet/src/utils/random';
 
 @Entity()
 export class UserEntity {
@@ -20,7 +21,9 @@ export class UserEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	name: string;
 
 	@Column()
@@ -35,7 +38,10 @@ export class UserEntity {
 	}
 
 	@Exclude()
-	@Column()
+	@Column({
+		nullable: true,
+		default: getRandomString(),
+	})
 	password: string;
 
 	@Exclude()
@@ -51,7 +57,10 @@ export class UserEntity {
 			.digest('hex');
 	}
 
-	@Column({ unique: true, nullable: true })
+	@Column({
+		unique: true,
+		nullable: true,
+	})
 	idCardNumber: string;
 
 	@OneToMany(
@@ -66,10 +75,16 @@ export class UserEntity {
 	)
 	contacts: ContactEntity[];
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: '',
+	})
 	description: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: '',
+	})
 	remarks: string; // 评价
 
 	@CreateDateColumn()
@@ -78,7 +93,10 @@ export class UserEntity {
 	@UpdateDateColumn()
 	updateTime: number;
 
-	@Column('simple-array')
+	@Column({
+		type: 'simple-array',
+		nullable: true,
+	})
 	tags: string[];
 
 	@OneToMany(
@@ -87,10 +105,16 @@ export class UserEntity {
 	)
 	endowments: EndowmentEntity[]; // 资质
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: '',
+	})
 	photo: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: '',
+	})
 	nickname: string;
 
 	@Column({

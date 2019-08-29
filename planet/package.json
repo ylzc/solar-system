@@ -9,6 +9,7 @@
     "@nestjs/swagger": "^3.1.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.10.0",
-    "swagger-ui-express": "^4.0.7"
+    "swagger-ui-express": "^4.0.7",
+    "randomatic": "~3.1.1"
   }
 }
