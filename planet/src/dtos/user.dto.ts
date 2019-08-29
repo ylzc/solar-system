@@ -1,6 +1,9 @@
 import { SexEnum } from '../enums';
 import { ContactDto } from './contact.dto';
-import { IsEnum, IsNumberString, Length, Validate } from 'class-validator';
+import {
+	IsEmail, IsEnum, IsMilitaryTime, IsMobilePhone, IsNumber, IsNumberString, IsOptional, Length,
+	Max, MaxLength, Min, MinLength, Validate,
+} from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 import { IsIdCard } from '../validates/IsIdCard';
 import { AddressDto } from './address.dto';
@@ -12,6 +15,25 @@ export class UserDto {
 	@ApiModelPropertyOptional()
 	@Expose()
 	readonly id?: string;
+
+	@ApiModelPropertyOptional()
+	@MaxLength(20)
+	@MinLength(6)
+	@IsOptional()
+	@Expose()
+	readonly account?: string;
+
+	@ApiModelPropertyOptional()
+	@IsMobilePhone(null)
+	@IsOptional()
+	@Expose()
+	readonly phoneAccount?: string;
+
+	@ApiModelPropertyOptional()
+	@IsEmail()
+	@IsOptional()
+	@Expose()
+	readonly emailAccount?: string;
 
 	@ApiModelPropertyOptional()
 	@Expose()
@@ -26,8 +48,11 @@ export class UserDto {
 	readonly lastName: string;
 
 	@ApiModelPropertyOptional()
+	@MaxLength(20)
+	@MinLength(8)
+	@IsOptional()
 	@Expose()
-	password: string;
+	password?: string;
 
 	@ApiModelPropertyOptional()
 	@Validate(IsIdCard, {
@@ -43,16 +68,16 @@ export class UserDto {
 	readonly addressList?: AddressDto[];
 
 	@ApiModelPropertyOptional({
-		type: [EndowmentDto],
-	})
-	@Expose()
-	readonly endowments?: EndowmentDto[];
-
-	@ApiModelPropertyOptional({
 		type: [ContactDto],
 	})
 	@Expose()
 	readonly contacts?: ContactDto[];
+
+	@ApiModelPropertyOptional({
+		type: [EndowmentDto],
+	})
+	@Expose()
+	readonly endowments?: EndowmentDto[];
 
 	@ApiModelPropertyOptional()
 	@Expose()
@@ -83,5 +108,19 @@ export class UserDto {
 	@IsEnum(SexEnum)
 	@Expose()
 	readonly sex: SexEnum;
+
+	@ApiModelPropertyOptional()
+	@Min(1)
+	@IsNumber()
+	@IsOptional()
+	@Expose()
+	readonly ags?: number;
+
+	@ApiModelPropertyOptional()
+	@Min(0)
+	@IsNumber()
+	@IsOptional()
+	@Expose()
+	readonly birthday?: number;
 
 }

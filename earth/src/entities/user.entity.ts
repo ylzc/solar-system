@@ -1,10 +1,7 @@
 import {
-	Index,
-	Column, Entity, PrimaryGeneratedColumn,
-	UpdateDateColumn, CreateDateColumn,
-	ManyToOne, BeforeUpdate, Generated,
-	OneToMany, PrimaryColumn,
-	BeforeInsert,
+	Index, Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn,
+	CreateDateColumn, ManyToOne, BeforeUpdate, Generated, OneToMany,
+	PrimaryColumn, BeforeInsert,
 } from 'typeorm';
 import { ContactEntity } from './contact.entity';
 import { SexEnum } from '@solar-system/planet';
@@ -12,7 +9,6 @@ import crypto = require('crypto');
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { AddressEntity } from './address.entity';
 import { EndowmentEntity } from './endowment.entity';
-import { getRandomString } from '@solar-system/planet/src/utils/random';
 
 @Entity()
 export class UserEntity {
@@ -30,7 +26,7 @@ export class UserEntity {
 		nullable: true,
 		unique: true,
 	})
-	normalAccount: string;
+	account: string;
 
 	@Exclude()
 	@Index()
@@ -59,7 +55,7 @@ export class UserEntity {
 	@Column()
 	lastName: string;
 
-	@Exclude()
+	@Expose()
 	get fullName(): string {
 		return `${this.firstName} ${this.lastName}`;
 	}
