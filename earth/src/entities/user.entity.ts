@@ -1,12 +1,15 @@
 import {
+	Index,
 	Column, Entity, PrimaryGeneratedColumn,
 	UpdateDateColumn, CreateDateColumn,
-	ManyToOne, BeforeUpdate, Generated, OneToMany,
+	ManyToOne, BeforeUpdate, Generated,
+	OneToMany, PrimaryColumn,
+	BeforeInsert,
 } from 'typeorm';
 import { ContactEntity } from './contact.entity';
 import { SexEnum } from '@solar-system/planet';
 import crypto = require('crypto');
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Transform } from 'class-transformer';
 import { AddressEntity } from './address.entity';
 import { EndowmentEntity } from './endowment.entity';
 import { getRandomString } from '@solar-system/planet/src/utils/random';
@@ -20,6 +23,30 @@ export class UserEntity {
 
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
+
+	@Exclude()
+	@Index()
+	@Column({
+		nullable: true,
+		unique: true,
+	})
+	normalAccount: string;
+
+	@Exclude()
+	@Index()
+	@Column({
+		nullable: true,
+		unique: true,
+	})
+	phoneAccount: string;
+
+	@Exclude()
+	@Index()
+	@Column({
+		nullable: true,
+		unique: true,
+	})
+	emailAccount: string;
 
 	@Column({
 		nullable: true,
@@ -40,7 +67,6 @@ export class UserEntity {
 	@Exclude()
 	@Column({
 		nullable: true,
-		default: getRandomString(),
 	})
 	password: string;
 
@@ -87,15 +113,21 @@ export class UserEntity {
 	})
 	remarks: string; // 评价
 
-	@CreateDateColumn()
+	@CreateDateColumn({
+		type: 'timestamp',
+	})
 	createTime: number;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({
+		type: 'timestamp',
+	})
 	updateTime: number;
 
+	@Transform(value => value ? value : [])
 	@Column({
 		type: 'simple-array',
 		nullable: true,
+		default: undefined,
 	})
 	tags: string[];
 
