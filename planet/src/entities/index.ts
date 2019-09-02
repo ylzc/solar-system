@@ -9,3 +9,9 @@ export const entities = [
 	AddressEntity,
 	EndowmentEntity,
 ];
+export {
+	ContactEntity,
+	UserEntity,
+	AddressEntity,
+	EndowmentEntity,
+};

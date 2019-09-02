@@ -43,4 +43,9 @@ export class UserController {
 		return this.srv.getUserById(id);
 	}
 
+	@Post('/check/account')
+	async checkByAccount(@Body() data: any) {
+		return await this.srv.checkByAccount(data.account || data.username, data.password);
+	}
+
 }

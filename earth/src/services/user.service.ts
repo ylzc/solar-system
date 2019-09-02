@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../entities/user.entity';
 import { Repository } from 'typeorm';
-import { UserDto } from '@solar-system/planet';
+import { UserDto, UserEntity } from '@solar-system/planet';
 import { TransformClassToPlain } from 'class-transformer';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class UserService {
@@ -34,6 +34,26 @@ export class UserService {
 			skip,
 			take: pageSize,
 		});
+	}
+
+	checkPassword(user: UserEntity, password: string): boolean {
+		return user.password === crypto
+			.createHash('md5')
+			.update(password + ':' + user.salt)
+			.digest('hex');
+	}
+
+	@TransformClassToPlain()
+	async checkByAccount(account: string, password: string) {
+		const user = await this.user.findOne({
+			account,
+		});
+		console.log(user);
+		if (this.checkPassword(user, password)) {
+			return user;
+		} else {
+			throw new UnauthorizedException();
+		}
 	}
 
 }

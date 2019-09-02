@@ -1,14 +1,19 @@
 import { SexEnum } from '../enums';
 import { ContactDto } from './contact.dto';
 import {
-	IsEmail, IsEnum, IsMilitaryTime, IsMobilePhone, IsNumber, IsNumberString, IsOptional, Length,
-	Max, MaxLength, Min, MinLength, Validate,
+	IsEmail, IsEnum, IsInt, IsMilitaryTime, IsMobilePhone, IsNumber, IsNumberString, IsOptional, Length,
+	Max, MaxLength, Min, MinLength, Validate, ValidateIf,
 } from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 import { IsIdCard } from '../validates/IsIdCard';
 import { AddressDto } from './address.dto';
 import { EndowmentDto } from './endowment.dto';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
+
+const transformFn = value => {
+	let temp = Number(value);
+	return temp > 0 ? temp : null;
+};
 
 export class UserDto {
 
@@ -18,7 +23,7 @@ export class UserDto {
 
 	@ApiModelPropertyOptional()
 	@MaxLength(20)
-	@MinLength(6)
+	@MinLength(4)
 	@IsOptional()
 	@Expose()
 	readonly account?: string;
@@ -49,7 +54,7 @@ export class UserDto {
 
 	@ApiModelPropertyOptional()
 	@MaxLength(20)
-	@MinLength(8)
+	@MinLength(5)
 	@IsOptional()
 	@Expose()
 	password?: string;
@@ -111,8 +116,9 @@ export class UserDto {
 
 	@ApiModelPropertyOptional()
 	@Min(1)
+	@IsInt()
 	@IsNumber()
-	@IsOptional()
+	@ValidateIf(value => value && value > 0)
 	@Expose()
 	readonly ags?: number;
 
@@ -120,6 +126,7 @@ export class UserDto {
 	@Min(0)
 	@IsNumber()
 	@IsOptional()
+	@Transform(transformFn)
 	@Expose()
 	readonly birthday?: number;
 

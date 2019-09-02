@@ -1,7 +1,7 @@
-import { AxiosStatic } from 'axios';
-import { UserDto } from '@solar-system/planet';
+import { UserDto, UserEntity } from '@solar-system/planet';
+import { HttpInstance } from '../interfaces/http.instance';
 
-export class EarthClient<T extends AxiosStatic> {
+export class EarthClient<T extends HttpInstance> {
 
 	constructor(
 		private readonly $http: T,
@@ -11,6 +11,10 @@ export class EarthClient<T extends AxiosStatic> {
 
 	addUser(data: UserDto) {
 		return this.$http.post('user/add', data);
+	}
+
+	checkByAccount<T>(data: any): T {
+		return this.$http.post('user/check/account', data);
 	}
 
 }

@@ -32,7 +32,7 @@ const bootstrap = async () => {
 		SwaggerModule.createDocument(
 			app,
 			new DocumentBuilder()
-				.setTitle('Earth fro user')
+				.setTitle('Earth for User')
 				.setDescription('人员及关系管理')
 				.addBearerAuth()
 				.build(),

@@ -5,11 +5,12 @@
   "main": "src/index.ts",
   "license": "MIT",
   "dependencies": {
+    "@nestjs/common": "^6.6.4",
     "@nestjs/platform-express": "^6.5.3",
     "@nestjs/swagger": "^3.1.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.10.0",
-    "swagger-ui-express": "^4.0.7",
-    "randomatic": "~3.1.1"
+    "randomatic": "~3.1.1",
+    "swagger-ui-express": "^4.0.7"
   }
 }

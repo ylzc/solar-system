@@ -49,15 +49,23 @@ export class UserEntity {
 	})
 	name: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	firstName: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	lastName: string;
 
 	@Expose()
 	get fullName(): string {
-		return `${this.firstName} ${this.lastName}`;
+		return (this.lastName && this.firstName)
+			? `${this.firstName} ${this.lastName}`
+			: this.name
+				? this.name
+				: this.account;
 	}
 
 	@Exclude()
@@ -71,12 +79,14 @@ export class UserEntity {
 	@Generated('uuid')
 	salt: string;
 
+	@BeforeInsert()
 	@BeforeUpdate()
 	updatePassword() {
 		this.password = crypto
 			.createHash('md5')
 			.update(this.password + ':' + this.salt)
 			.digest('hex');
+		console.log(this.password);
 	}
 
 	@Column({
