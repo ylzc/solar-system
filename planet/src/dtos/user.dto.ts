@@ -1,7 +1,7 @@
 import { SexEnum } from '../enums';
 import { ContactDto } from './contact.dto';
 import {
-	IsEmail, IsEnum, IsInt, IsMilitaryTime, IsMobilePhone, IsNumber, IsNumberString, IsOptional, Length,
+	IsEmail, IsEnum, IsInt, IsMilitaryTime, IsMobilePhone, IsNumber, IsNumberString, IsOptional, IsString, Length,
 	Max, MaxLength, Min, MinLength, Validate, ValidateIf,
 } from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
@@ -18,6 +18,8 @@ const transformFn = value => {
 export class UserDto {
 
 	@ApiModelPropertyOptional()
+	@IsString()
+	@IsOptional()
 	@Expose()
 	readonly id?: string;
 
@@ -41,16 +43,22 @@ export class UserDto {
 	readonly emailAccount?: string;
 
 	@ApiModelPropertyOptional()
+	@IsString()
+	@IsOptional()
 	@Expose()
 	readonly name?: string;
 
 	@ApiModelProperty()
+	@IsString()
+	@IsOptional()
 	@Expose()
-	readonly firstName: string;
+	readonly firstName?: string;
 
 	@ApiModelProperty()
+	@IsString()
+	@IsOptional()
 	@Expose()
-	readonly lastName: string;
+	readonly lastName?: string;
 
 	@ApiModelPropertyOptional()
 	@MaxLength(20)
@@ -111,8 +119,9 @@ export class UserDto {
 		default: SexEnum.unknown,
 	})
 	@IsEnum(SexEnum)
+	@IsOptional()
 	@Expose()
-	readonly sex: SexEnum;
+	readonly sex?: SexEnum;
 
 	@ApiModelPropertyOptional()
 	@Min(1)

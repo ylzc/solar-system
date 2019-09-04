@@ -6,7 +6,7 @@ import {
 	Post, Query,
 	UseInterceptors,
 } from '@nestjs/common';
-import { UserDto, PageDto } from '@solar-system/planet';
+import { UserDto, PageDto, CheckAccountDto } from '@solar-system/planet';
 import { UserService } from '../services/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
 
@@ -39,13 +39,19 @@ export class UserController {
 	}
 
 	@Get(':id')
-	getUserById(@Param('id') id: string) {
-		return this.srv.getUserById(id);
+	async getUserById(@Param('id') id: string) {
+		return await this.srv.getUserById(id);
 	}
 
 	@Post('/check/account')
-	async checkByAccount(@Body() data: any) {
+	async checkByAccount(@Body() data: CheckAccountDto) {
 		return await this.srv.checkByAccount(data.account || data.username, data.password);
+	}
+
+	@Post('update')
+	async update(@Body() user: UserDto) {
+		await this.srv.save(user);
+		return await this.srv.getUserById(user.id);
 	}
 
 }

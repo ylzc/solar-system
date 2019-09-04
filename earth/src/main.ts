@@ -6,7 +6,7 @@ import {
 } from '@nestjs/platform-express';
 import express = require('express');
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
 
 const bootstrap = async () => {
 	const server = express();

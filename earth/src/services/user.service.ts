@@ -7,11 +7,9 @@ import * as crypto from 'crypto';
 
 @Injectable()
 export class UserService {
-	constructor(
-		@InjectRepository(UserEntity)
-		private readonly user: Repository<UserEntity>,
-	) {
-	}
+
+	@InjectRepository(UserEntity)
+	private readonly user: Repository<UserEntity>;
 
 	async save(user: UserDto) {
 		return await this.user.save(user);
@@ -43,17 +41,22 @@ export class UserService {
 			.digest('hex');
 	}
 
-	@TransformClassToPlain()
+	// @TransformClassToPlain()
 	async checkByAccount(account: string, password: string) {
 		const user = await this.user.findOne({
 			account,
 		});
-		console.log(user);
-		if (this.checkPassword(user, password)) {
-			return user;
+		let err = '';
+		if (user) {
+			if (this.checkPassword(user, password)) {
+				return user;
+			} else {
+				err = '密码错误';
+			}
 		} else {
-			throw new UnauthorizedException();
+			err = '账号不存在';
 		}
+		throw new UnauthorizedException(err);
 	}
 
 }

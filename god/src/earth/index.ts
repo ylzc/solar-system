@@ -9,7 +9,7 @@ export class EarthClient<T extends HttpInstance> {
 	) {
 	}
 
-	addUser(data: UserDto) {
+	addUser<T>(data: UserDto): T {
 		return this.$http.post('user/add', data);
 	}
 

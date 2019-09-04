@@ -3,6 +3,7 @@ import { UserController } from './controllers/user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { entities } from '@solar-system/planet';
 import { UserService } from './services/user.service';
+import { UserSubscriber } from './subscribers/user.subscriber';
 
 @Module({
 	imports: [
@@ -11,14 +12,18 @@ import { UserService } from './services/user.service';
 			entities,
 			username: 'postgres',
 			// password: '123456',
-			// schema: 'earth-user',
-			// database: 'solar-system',
-			database: 'postgres',
+			schema: 'earth-user',
+			database: 'solar-system',
 			synchronize: true,
+			subscribers: [
+				UserSubscriber,
+			],
 		}),
 		TypeOrmModule.forFeature(entities),
 	],
-	controllers: [UserController],
+	controllers: [
+		UserController
+	],
 	providers: [
 		UserService,
 	],

@@ -5,7 +5,6 @@ import {
 } from 'typeorm';
 import { ContactEntity } from './contact.entity';
 import { SexEnum } from '@solar-system/planet';
-import crypto = require('crypto');
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { AddressEntity } from './address.entity';
 import { EndowmentEntity } from './endowment.entity';
@@ -75,19 +74,20 @@ export class UserEntity {
 	password: string;
 
 	@Exclude()
-	@Column()
-	@Generated('uuid')
+	@Column({
+		nullable: true,
+	})
 	salt: string;
 
-	@BeforeInsert()
-	@BeforeUpdate()
-	updatePassword() {
-		this.password = crypto
-			.createHash('md5')
-			.update(this.password + ':' + this.salt)
-			.digest('hex');
-		console.log(this.password);
-	}
+	// @BeforeInsert()
+	// @BeforeUpdate()
+	// updatePassword() {
+	// 	this.password = crypto
+	// 		.createHash('md5')
+	// 		.update(this.password + ':' + this.salt)
+	// 		.digest('hex');
+	// 	console.log(this.password);
+	// }
 
 	@Column({
 		unique: true,
