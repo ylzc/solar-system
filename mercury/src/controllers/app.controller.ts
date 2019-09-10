@@ -19,7 +19,7 @@ export class AppController {
 	@UseGuards(AuthGuard('local'))
 	@Post('validate')
 	async validate(@Request() req) {
-		console.log(req.user);
+		// console.log(req.user);
 		return this.auth.login(req.user);
 	}
 

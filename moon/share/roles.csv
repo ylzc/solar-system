@@ -1,0 +1,9 @@
+p, alice, domain1, data1, read
+p, bob, domain2, data2, write
+p, data_group_admin, domain1, data_group, write
+p, data_group_admin, domain2, data_group, read
+p, data_group_admin, domain2, data2, read
+
+g, alice, data_group_admin, domain1
+g, bob, data_group_admin, domain2
+g, bob, data_group_admin, domain1

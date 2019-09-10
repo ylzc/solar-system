@@ -39,7 +39,7 @@ const bootstrap = async () => {
 		),
 	);
 	await app.listen(3535);
-	logger.log('Now Earth start on 3535');
+	logger.log('Now Earth start on 3535','SolarSystem');
 };
 
 bootstrap().catch(console.log);

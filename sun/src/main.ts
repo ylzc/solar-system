@@ -114,6 +114,9 @@ app.get('/center/add', (req, res) => {
 	}
 	res.json(req.query);
 });
+app.post('/login', (req, res) => {
+
+});
 console.log('Prepare Sun Center ...');
 app.listen(3434, () => {
 	console.log('Now Sun is start at 3434');

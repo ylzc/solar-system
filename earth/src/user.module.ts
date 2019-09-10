@@ -10,6 +10,7 @@ import { UserSubscriber } from './subscribers/user.subscriber';
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			entities,
+			host: process.env.DB_HOST || '127.0.0.1',
 			username: 'postgres',
 			// password: '123456',
 			schema: 'earth-user',
@@ -22,7 +23,7 @@ import { UserSubscriber } from './subscribers/user.subscriber';
 		TypeOrmModule.forFeature(entities),
 	],
 	controllers: [
-		UserController
+		UserController,
 	],
 	providers: [
 		UserService,

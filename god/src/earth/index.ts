@@ -1,5 +1,5 @@
 import { UserDto, UserEntity } from '@solar-system/planet';
-import { HttpInstance } from '../interfaces/http.instance';
+import { HttpInstance } from '../interfaces';
 
 export class EarthClient<T extends HttpInstance> {
 
