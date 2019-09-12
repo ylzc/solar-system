@@ -1,6 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthCheckDto } from '@solar-system/planet';
+import { AuthCheckDto, SetPermissionDto, SetRoleDto } from '@solar-system/planet';
 
 @Controller()
 export class AppController {
@@ -12,4 +12,13 @@ export class AppController {
 		return await this.appService.enforce(auth.sub, auth.domain, auth.obj, auth.act);
 	}
 
+	@Post('set-permission')
+	async setPermission(@Body() auth: SetPermissionDto) {
+		return await this.appService.addPolicy(auth.sub, auth.domain, auth.obj, auth.act);
+	}
+
+	@Post('set-role')
+	async setRole(@Body() auth: SetRoleDto) {
+		return await this.appService.addGroupingPolicy(auth.user, auth.role, auth.domain);
+	}
 }

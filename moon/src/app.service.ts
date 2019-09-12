@@ -3,6 +3,9 @@ import { newEnforcer, Enforcer } from 'casbin';
 import { resolve } from 'path';
 import TypeORMAdapter from 'typeorm-adapter';
 
+type role = string;
+type user = string;
+
 @Injectable()
 export class AppService implements OnModuleInit {
 
@@ -20,11 +23,18 @@ export class AppService implements OnModuleInit {
 		});
 		this.enforcer = await newEnforcer(resolve(__dirname, '../share/model.conf'), this.adapter);
 		await this.enforcer.loadPolicy();
-		await this.enforcer.addPolicy('alice', null, 'data', 'read');
 	}
 
-	enforce(sub: string, domain: string, obj: any, act: string) {
-		return this.enforcer.enforce(sub, domain, obj, act);
+	async enforce(sub: role | user, domain: string | null, obj: any, act: string) {
+		return await this.enforcer.enforce(sub, domain, obj, act);
+	}
+
+	async addPolicy(sub: role | user, domain: string | null, obj: any, act: string) {
+		return await this.enforcer.addPolicy(sub, domain, obj, act);
+	}
+
+	async addGroupingPolicy(user: string, role: string, domain: string | null) {
+		return await this.enforcer.addGroupingPolicy(user, role, domain);
 	}
 
 }
