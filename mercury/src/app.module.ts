@@ -11,7 +11,7 @@ import { LocalStrategy } from './services/local.strategy';
 @Module({
 	imports: [
 		HttpModule.register({
-			baseURL: 'http://127.0.0.1:3535',
+			baseURL: 'http://127.0.0.1:3030',
 		}),
 		PassportModule,
 		JwtModule.register({

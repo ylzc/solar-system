@@ -22,13 +22,15 @@ async function bootstrap() {
 		SwaggerModule.createDocument(
 			app,
 			new DocumentBuilder()
-				.setTitle('Mercury for Auth')
-				.setDescription('权限及认证')
+				.setTitle('Mercury for Token')
+				.setDescription('认证')
 				.addBearerAuth()
 				.build(),
 		),
 	);
-	await app.listen(3000);
+	app.setGlobalPrefix('token');
+	await app.listen(process.env.PORT || 3534);
+	logger.log('Now Mercury start on ' + (process.env.PORT || 3534), 'Solar-System');
 }
 
-bootstrap().catch(logger.log);
+bootstrap().catch(console.log);

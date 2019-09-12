@@ -4,9 +4,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../services/auth.service';
 import { ApiImplicitBody, ApiUseTags } from '@nestjs/swagger';
 
-@ApiUseTags('user')
+@ApiUseTags('token')
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('auth')
+@Controller()
 export class AppController {
 
 	@Inject()

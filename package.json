@@ -6,6 +6,8 @@
   "author": "none",
   "license": "MIT",
   "private": true,
+  "scripts": {
+  },
   "workspaces": [
     "sun",
     "earth",

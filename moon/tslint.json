@@ -33,7 +33,8 @@
       true,
       "tabs"
     ],
-    "no-console": false
+    "no-console": false,
+    "no-var-keyword": false
   },
   "rulesDirectory": []
 }
