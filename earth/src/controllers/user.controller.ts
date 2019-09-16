@@ -38,11 +38,6 @@ export class UserController {
 		};
 	}
 
-	@Get(':id')
-	async getUserById(@Param('id') id: string) {
-		return await this.srv.getUserById(id);
-	}
-
 	@Post('/check/account')
 	async checkByAccount(@Body() data: CheckAccountDto) {
 		return await this.srv.checkByAccount(data.account || data.username, data.password);
@@ -54,4 +49,13 @@ export class UserController {
 		return await this.srv.getUserById(user.id);
 	}
 
+	@Get('test')
+	test() {
+		return 'test';
+	}
+
+	@Get(':id')
+	async getUserById(@Param('id') id: string) {
+		return await this.srv.getUserById(id);
+	}
 }

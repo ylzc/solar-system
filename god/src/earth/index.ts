@@ -10,11 +10,11 @@ export class EarthClient<T extends HttpInstance> {
 	}
 
 	addUser<T>(data: UserDto): T {
-		return this.$http.post('user/add', data);
+		return this.$http.post('/user/add', data);
 	}
 
 	checkByAccount<T>(data: any): T {
-		return this.$http.post('user/check/account', data);
+		return this.$http.post('/user/check/account', data);
 	}
 
 }

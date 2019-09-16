@@ -6,13 +6,13 @@ import { Injectable } from '@nestjs/common';
 export class JwtStrategy extends PassportStrategy(Strategy) {
 	constructor() {
 		super({
-			jwtFromRequest: ExtractJwt.fromHeader('refreshToken'),
+			jwtFromRequest: ExtractJwt.fromHeader('refreshtoken'),
 			ignoreExpiration: false,
 			secretOrKey: 'solar-system',
 		});
 	}
 
 	async validate(payload: any) {
-		return { userId: payload.sub, username: payload.username };
+		return payload;
 	}
 }

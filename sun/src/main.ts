@@ -4,6 +4,8 @@ import * as helmet from 'helmet';
 import * as session from 'express-session';
 import * as HttpProxy from 'http-proxy';
 import * as fs from 'file-system';
+import { MercuryClient } from '@solar-system/god/src/mercury';
+import axios, { AxiosInstance } from 'axios';
 
 const app = express();
 
@@ -58,8 +60,9 @@ type target = string;
 function needProxy(req): Promise<target> {
 	return new Promise((resolve) => {
 		let res = null;
-		const p = req._parsedUrl.pathname.split('/');
-		if (p.length) {
+		const p = req._parsedUrl.pathname.match(/^\/(\S*?)\//);
+		// const p = req._parsedUrl.pathname.split('/');
+		if (p && p.length > 0) {
 			res = db.get(p[1]);
 		}
 		resolve(res);
@@ -70,6 +73,8 @@ const hp = new HttpProxy({
 	ws: true,
 	changeOrigin: true,
 });
+const client: MercuryClient<AxiosInstance> = new MercuryClient(axios.create({ baseURL: 'http://127.0.0.1:3434' }));
+// const client: MercuryClient<AxiosInstance> = new MercuryClient(axios);
 const parser = session({
 	resave: true,
 	saveUninitialized: true,
@@ -115,7 +120,20 @@ app.get('/center/add', (req, res) => {
 	res.json(req.query);
 });
 app.post('/login', (req, res) => {
-
+	client
+		.validate({
+			username: req.body.username,
+			password: req.body.password,
+		})
+		.then(({ data }) => {
+			res.json(data);
+		})
+		.catch((e) => {
+			res.status(500)
+				.json({
+					message: e.message,
+				});
+		});
 });
 console.log('Prepare Sun Center ...');
 app.listen(3434, () => {

@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { entities } from '@solar-system/planet';
 import { UserService } from './services/user.service';
 import { UserSubscriber } from './subscribers/user.subscriber';
+import { MorganMiddleware } from '@nest-middlewares/morgan';
 
 @Module({
 	imports: [
@@ -29,5 +30,9 @@ import { UserSubscriber } from './subscribers/user.subscriber';
 		UserService,
 	],
 })
-export class UserModule {
+export class UserModule implements NestModule {
+	configure(consumer: MiddlewareConsumer): any {
+		MorganMiddleware.configure('dev');
+		consumer.apply(MorganMiddleware).forRoutes('*');
+	}
 }
