@@ -9,8 +9,8 @@ export class SunClient<T extends HttpInstance> {
 		this.$http = http;
 	}
 
-	register(AddDto: RegisterServiceDto) {
-		this.$http.get('/center/add', { params: AddDto });
+	register<R>(AddDto: RegisterServiceDto): R {
+		return this.$http.get('/center/add', { params: AddDto });
 	}
 
 }

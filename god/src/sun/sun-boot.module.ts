@@ -2,12 +2,13 @@ import { DynamicModule, HttpModule, HttpService, Module } from '@nestjs/common';
 import { SunBootService } from './sun-boot.service';
 import { SunBootModuleOptions } from '../interfaces';
 import { SunClient } from './sun.client';
+import { SUN_BOOT_OPTIONS, SUN_CLIENT_SERVICE } from './constants';
 
 @Module({
 	imports: [],
 	providers: [
 		{
-			provide: 'SUN_CLIENT_SERVICE',
+			provide: SUN_CLIENT_SERVICE,
 			useFactory: async (http: HttpService) => {
 				return new SunClient(http.axiosRef);
 			},
@@ -15,7 +16,7 @@ import { SunClient } from './sun.client';
 		},
 		SunBootService,
 		{
-			provide: 'SUN_BOOT_OPTIONS',
+			provide: SUN_BOOT_OPTIONS,
 			useValue: {
 				baseUrl: process.env.SUN,
 				host: process.env.HOST,
@@ -24,7 +25,7 @@ import { SunClient } from './sun.client';
 		},
 	],
 	exports: [
-		'SUN_CLIENT_SERVICE',
+		SUN_CLIENT_SERVICE,
 	],
 })
 export class SunBootModule {
@@ -36,7 +37,7 @@ export class SunBootModule {
 			],
 			providers: [
 				{
-					provide: 'SUN_BOOT_OPTIONS',
+					provide: SUN_BOOT_OPTIONS,
 					useValue: config,
 				},
 			],
