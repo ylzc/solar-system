@@ -3,23 +3,25 @@ import { newEnforcer, Enforcer } from 'casbin';
 import { resolve } from 'path';
 import TypeORMAdapter from 'typeorm-adapter';
 
+// tslint:disable-next-line:class-name
 type role = string;
+// tslint:disable-next-line:class-name
 type user = string;
 
 @Injectable()
-export class AppService implements OnModuleInit {
+export class AuthService implements OnModuleInit {
 
 	private enforcer: Enforcer;
 
 	private adapter: TypeORMAdapter;
 
-	async onModuleInit(): Promise<any> {
+	async onModuleInit(): Promise<void> {
 		this.adapter = await TypeORMAdapter.newAdapter({
 			type: 'postgres',
-			host: '172.18.0.127',
-			database: 'solar-system',
+			host: process.env.DB_HOST || '172.18.0.127',
+			database: 'postgres',
 			username: 'postgres',
-			schema: 'moon-auth',
+			schema: 'public',
 		});
 		this.enforcer = await newEnforcer(resolve(__dirname, '../share/model.conf'), this.adapter);
 		await this.enforcer.loadPolicy();

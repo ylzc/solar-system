@@ -4,7 +4,7 @@ import {
 	PrimaryColumn, BeforeInsert,
 } from 'typeorm';
 import { ContactEntity } from './contact.entity';
-import { SexEnum } from '@solar-system/planet';
+import { SexEnum } from '../enums';
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { AddressEntity } from './address.entity';
 import { EndowmentEntity } from './endowment.entity';

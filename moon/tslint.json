@@ -34,7 +34,10 @@
       "tabs"
     ],
     "no-console": false,
-    "no-var-keyword": false
+    "no-var-keyword": false,
+    "no-unused-expression": {
+      "severity": "warn"
+    }
   },
   "rulesDirectory": []
 }

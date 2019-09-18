@@ -2,7 +2,7 @@ import {
 	Body,
 	ClassSerializerInterceptor,
 	Controller,
-	Get, Param,
+	Get, Inject, Param,
 	Post, Query,
 	UseInterceptors,
 } from '@nestjs/common';
@@ -15,8 +15,8 @@ import { ApiUseTags } from '@nestjs/swagger';
 @Controller('user')
 export class UserController {
 
-	constructor(private readonly srv: UserService) {
-	}
+	@Inject(UserService)
+	private readonly srv: UserService;
 
 	@Post('add')
 	async addUser(@Body() user: UserDto) {

@@ -14,8 +14,8 @@ import { MorganMiddleware } from '@nest-middlewares/morgan';
 			host: process.env.DB_HOST || '127.0.0.1',
 			username: 'postgres',
 			// password: '123456',
-			schema: 'earth-user',
-			database: 'solar-system',
+			schema: 'public',
+			database: 'postgres',
 			synchronize: true,
 			subscribers: [
 				UserSubscriber,
