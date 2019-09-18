@@ -5,9 +5,20 @@ import { entities } from '@solar-system/planet';
 import { UserService } from './services/user.service';
 import { UserSubscriber } from './subscribers/user.subscriber';
 import { MorganMiddleware } from '@nest-middlewares/morgan';
+import { SunBootModule } from '@solar-system/god';
 
 @Module({
 	imports: [
+		SunBootModule.register({
+			sun: process.env.SUN,
+			http: {
+				baseURL: process.env.SUN,
+			},
+			service: {
+				prefix: 'user',
+				target: `http://${process.env.HOST || '127.0.0.1'}:${process.env.port || 3535}`,
+			},
+		}),
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			entities,

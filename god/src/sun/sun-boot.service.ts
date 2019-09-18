@@ -18,11 +18,7 @@ export class SunBootService implements OnModuleInit {
 		logger.log('SUN : ' + (this.config.sun || 'Not Found'), 'SolarSystem');
 		if (this.config.sun) {
 			try {
-				await this.sun
-					.register<PromiseRes<any>>({
-						prefix: 'auth',
-						target: `http://${this.config.host || '127.0.0.1'}:${this.config.port || 3536}`,
-					});
+				await this.sun.register<PromiseRes<any>>(this.config.service);
 			} catch (e) {
 				logger.error(e.message, 'SolarSystem');
 			}

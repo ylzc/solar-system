@@ -1,9 +1,8 @@
 import { HttpModuleOptions } from '@nestjs/common';
+import { RegisterServiceDto } from '@solar-system/planet';
 
 export interface SunBootModuleOptions {
 	http: HttpModuleOptions;
-	baseUrl?: string;
-	host?: string;
-	port?: string | number;
+	service?: RegisterServiceDto;
 	sun?: string;
 }

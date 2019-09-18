@@ -9,7 +9,10 @@ import { SunBootModule } from '@solar-system/god';
 			http: {
 				baseURL: process.env.SUN,
 			},
-			host: '172.18.0.127',
+			service: {
+				prefix: 'auth',
+				target: `http://${process.env.HOST || '127.0.0.1'}:${process.env.port || 3536}`,
+			},
 			sun: process.env.SUN,
 		}),
 	],
