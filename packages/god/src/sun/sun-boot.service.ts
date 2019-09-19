@@ -20,7 +20,7 @@ export class SunBootService implements OnModuleInit {
 			try {
 				await this.sun.register<PromiseRes<any>>(this.config.service);
 			} catch (e) {
-				logger.error(e.message, 'SolarSystem');
+				logger.error(e.message, null, 'SolarSystem');
 			}
 		}
 	}
