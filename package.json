@@ -10,12 +10,7 @@
   },
   "workspaces": [
     "sun",
-    "earth",
-    "moon",
-    "mercury",
-    "planet",
-    "god",
-    "sun-express"
+    "packages/**"
   ],
   "devDependencies": {
     "typescript": "3.6.2"
