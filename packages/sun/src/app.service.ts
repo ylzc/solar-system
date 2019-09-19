@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { REDIS_MICRO_CLIENT } from './constants';
-import { REFRESH_CONFIG } from '@solar-system/planet';
+import { REDIS_MICRO_CLIENT, REFRESH_CONFIG } from '@solar-system/planet';
 
 @Injectable()
 export class AppService {

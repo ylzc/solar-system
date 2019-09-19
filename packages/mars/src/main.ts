@@ -1,8 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
+import * as express from 'express';
+import { Transport } from '@nestjs/common/enums/transport.enum';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+	const server = express();
+	const app = await NestFactory
+		.create<NestExpressApplication>(
+			AppModule,
+			new ExpressAdapter(server),
+			{},
+		);
+	const microservice = app.connectMicroservice({
+		transport: Transport.REDIS,
+		options: {},
+	});
+	await app.listen(3001);
 }
-bootstrap();
+
+// tslint:disable-next-line:no-console
+bootstrap().catch(console.log);
