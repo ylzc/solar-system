@@ -16,6 +16,7 @@ async function bootstrap() {
 		transport: Transport.REDIS,
 		options: {},
 	});
+	await app.startAllMicroservicesAsync();
 	await app.listen(3001);
 }
 

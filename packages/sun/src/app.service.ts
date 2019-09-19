@@ -12,7 +12,20 @@ export class AppService {
 	}
 
 	async publishConfig() {
-		this.client.emit(REFRESH_CONFIG, {});
+		this.client.emit(REFRESH_CONFIG, {
+			test: 1,
+		});
+	}
+
+	async test() {
+		return await this.client
+			.send(
+				'mars.test',
+				{
+					from: 'sun',
+				},
+			)
+			.toPromise();
 	}
 
 }

@@ -9,4 +9,14 @@ export class AppController {
 	) {
 	}
 
+	@Get('publish')
+	async publish() {
+		this.appService.publishConfig();
+		return {};
+	}
+
+	@Get('test')
+	test() {
+		return this.appService.test();
+	}
 }
