@@ -57,6 +57,7 @@ console.log('Init db');
 const db = new DB();
 type target = string;
 
+// tslint:disable-next-line:class-name
 function needProxy(req): Promise<target> {
 	return new Promise((resolve) => {
 		let res = null;
@@ -113,6 +114,7 @@ app.use(express.static('public'));
 app.get('/center/add', (req, res) => {
 	const prefix = req.query.prefix;
 	const target = req.query.target;
+	console.log(req.ip.match(/\d+\.\d+\.\d+\.\d+/)[0]);
 	if (prefix && target) {
 		db.set(prefix, target);
 		console.log(`/center/add ${prefix} => ${target}`);

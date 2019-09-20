@@ -34,7 +34,8 @@
       "tabs"
     ],
     "no-console": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "no-var-keyword": false
   },
   "rulesDirectory": []
 }
