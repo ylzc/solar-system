@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ProxyController } from './proxy.controller';
-import { ProxyService } from './proxy.service';
+import { ProxyController } from './controllers/proxy.controller';
+import { ProxyService } from './services/proxy.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { REDIS_MICRO_CLIENT } from '@solar-system/planet';
-import { CenterService } from './center.service';
-import { PoolService } from './pool.service';
+import { CenterService } from './services/center.service';
+import { PoolService } from './services/pool.service';
+import { CenterController } from './controllers/center.controller';
 
 @Module({
 	imports: [
@@ -18,11 +19,12 @@ import { PoolService } from './pool.service';
 	],
 	controllers: [
 		ProxyController,
+		CenterController,
 	],
 	providers: [
 		ProxyService,
 		CenterService,
-		PoolService
+		PoolService,
 	],
 })
 export class ProxyModule {
