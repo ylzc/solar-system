@@ -20,8 +20,7 @@ export class CenterController {
 
 	@EventPattern(REFRESH_SERVICE)
 	handleRefreshService(event: any) {
-		console.log(event);
-		// this.pools.reSetPool(event.prefix, event.data);
+		this.pools.reSetPool(event.prefix, event.data);
 	}
 
 	@All('register')
