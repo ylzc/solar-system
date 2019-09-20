@@ -18,9 +18,11 @@ import { SUN_BOOT_OPTIONS, SUN_CLIENT_SERVICE } from './constants';
 		{
 			provide: SUN_BOOT_OPTIONS,
 			useValue: {
-				baseUrl: process.env.SUN,
-				host: process.env.HOST,
-				port: process.env.PORT,
+				sun: process.env.SUN,
+				service: {},
+				http: {
+					baseURL: process.env.SUN,
+				},
 			} as SunBootModuleOptions,
 		},
 	],

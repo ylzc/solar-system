@@ -6,6 +6,7 @@ import { UserService } from './services/user.service';
 import { UserSubscriber } from './subscribers/user.subscriber';
 import { MorganMiddleware } from '@nest-middlewares/morgan';
 import { SunBootModule } from '@solar-system/god';
+import { getIp } from './utils';
 
 @Module({
 	imports: [
@@ -16,7 +17,7 @@ import { SunBootModule } from '@solar-system/god';
 			},
 			service: {
 				prefix: 'user',
-				target: `http://${process.env.HOST || '127.0.0.1'}:${process.env.port || 3535}`,
+				target: `http://${getIp()}:${process.env.port || 3535}`,
 			},
 		}),
 		TypeOrmModule.forRoot({

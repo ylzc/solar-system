@@ -16,8 +16,7 @@ const bootstrap = async () => {
 			UserModule,
 			new ExpressAdapter(server),
 			{
-				cors: true,
-				logger: logger,
+				logger,
 			},
 		);
 	app.useGlobalPipes(new ValidationPipe({

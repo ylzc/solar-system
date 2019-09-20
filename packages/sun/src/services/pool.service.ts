@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as WrrPool from 'wrr-pool';
-import { RegisterServiceDto } from '@solar-system/planet';
 
 @Injectable()
 export class PoolService {
 
-	private readonly pools: Map<string, WrrPool<RegisterServiceDto>>;
+	private readonly pools: Map<string, WrrPool<string>>;
 
 	constructor() {
 		this.pools = new Map();
@@ -18,16 +17,16 @@ export class PoolService {
 			this.pools.set(id, pool);
 		}
 		config.forEach(item => {
-			pool.add(item, item.weight || 100);
+			pool.add(item.target, item.weight || 100);
 		});
 		return pool;
 	}
 
 	reSetPool(id: string, config: any[]) {
-		const pool = new WrrPool<any>();
+		const pool = new WrrPool<string>();
 		this.pools.set(id, pool);
 		config.forEach(item => {
-			pool.add(item, item.weight || 100);
+			pool.add(item.target, item.weight || 100);
 		});
 		return pool;
 	}

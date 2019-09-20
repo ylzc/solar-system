@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy, ClientRedis } from '@nestjs/microservices';
-import { REDIS_MICRO_CLIENT, REFRESH_CONFIG, RegisterServiceDto } from '@solar-system/planet';
+import { logger, REDIS_MICRO_CLIENT, REFRESH_CONFIG, REFRESH_SERVICE, RegisterServiceDto } from '@solar-system/planet';
 import { RedisService } from 'nestjs-redis';
 import { Redis } from 'ioredis';
 
@@ -22,7 +22,36 @@ export class CenterService {
 		});
 	}
 
+	async publishServiceEvent(data: any) {
+		this.client.emit(REFRESH_SERVICE, data);
+	}
+
 	async register(params: RegisterServiceDto) {
-		return params;
+		await this.redis.sadd(
+			'sun:service:list',
+			params.prefix,
+		);
+		await this.redis.hset(
+			'sun:service:' + params.prefix,
+			params.target,
+			params.weight || 100,
+		);
+		const temp = await this.redis.hgetall('sun:service:' + params.prefix);
+		const data = [];
+		for (const k of Object.keys(temp)) {
+			data.push({
+				prefix: params.prefix,
+				target: k,
+				weight: temp[k],
+			});
+		}
+		this.publishServiceEvent({
+			action: 'add',
+			prefix: params.prefix,
+			data,
+		});
+		return {
+			message: '服务设置成功',
+		};
 	}
 }

@@ -22,7 +22,7 @@ async function bootstrap() {
 		transform: true,
 	}));
 	await app.startAllMicroservicesAsync();
-	await app.listen(3000);
+	await app.listen(3434);
 }
 
 // tslint:disable-next-line:no-console
