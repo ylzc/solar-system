@@ -36,15 +36,7 @@ export class CenterService {
 			params.target,
 			params.weight || 100,
 		);
-		const temp = await this.redis.hgetall('sun:service:' + params.prefix);
-		const data = [];
-		for (const k of Object.keys(temp)) {
-			data.push({
-				prefix: params.prefix,
-				target: k,
-				weight: temp[k],
-			});
-		}
+		const data = await this.getSrvConfig(params.prefix);
 		this.publishServiceEvent({
 			action: 'add',
 			prefix: params.prefix,
@@ -53,5 +45,23 @@ export class CenterService {
 		return {
 			message: '服务设置成功',
 		};
+	}
+
+	async getSrvConfig(prefix: string) {
+		const temp = [];
+		const conf = await this.redis.hgetall('sun:service:' + prefix);
+		for (const target of Object.keys(conf)) {
+			temp.push({ prefix, target, weight: conf[target] });
+		}
+		return temp;
+	}
+
+	async list() {
+		const sevList: string[] = await this.redis.smembers('sun:service:list');
+		let temp = [];
+		for (let i = 0, l = sevList.length; i < l; i++) {
+			temp = temp.concat(await this.getSrvConfig(sevList[i]));
+		}
+		return temp;
 	}
 }

@@ -9,7 +9,6 @@
   "scripts": {
   },
   "workspaces": [
-    "sun",
     "packages/**"
   ],
   "devDependencies": {

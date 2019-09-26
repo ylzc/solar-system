@@ -25,7 +25,7 @@ import { getIp } from './utils';
 			entities,
 			host: process.env.DB_HOST || '127.0.0.1',
 			username: 'postgres',
-			// password: '123456',
+			port: Number(process.env.DB_PORT) || 5432,
 			schema: 'public',
 			database: 'postgres',
 			synchronize: true,

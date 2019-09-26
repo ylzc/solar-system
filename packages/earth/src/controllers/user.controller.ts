@@ -30,7 +30,7 @@ export class UserController {
 
 	@Get('list')
 	async findUserForPage(@Query() params: PageDto) {
-		let [list, totalCount] = await this.srv.findUserForPage(params.pageNum, params.pageSize);
+		const [list, totalCount] = await this.srv.findUserForPage(params.pageNum, params.pageSize);
 		return {
 			...params,
 			list,
