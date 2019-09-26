@@ -22,13 +22,13 @@
   "dependencies": {
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
+    "@nestjs/microservices": "^6.7.1",
     "@nestjs/platform-express": "^6.0.0",
+    "@solar-system/planet": "^1.0.0",
+    "redis": "^2.8.0",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
-    "rxjs": "^6.3.3",
-    "@nestjs/microservices": "^6.7.1",
-    "redis": "^2.8.0",
-    "@solar-system/planet": "^1.0.0"
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
@@ -41,11 +41,11 @@
     "supertest": "4.0.2",
     "ts-jest": "24.0.2",
     "ts-node": "8.1.0",
+    "ts-node-dev": "^1.0.0-pre.42",
     "tsc-watch": "2.2.1",
     "tsconfig-paths": "3.8.0",
     "tslint": "5.16.0",
-    "typescript": "3.4.3",
-    "ts-node-dev": "^1.0.0-pre.42"
+    "typescript": "3.4.3"
   },
   "jest": {
     "moduleFileExtensions": [
