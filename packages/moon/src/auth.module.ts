@@ -1,7 +1,8 @@
-import { HttpModule, Module } from '@nestjs/common';
+import { HttpModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { SunBootModule } from '@solar-system/god';
+import { MorganMiddleware } from '@nest-middlewares/morgan';
 
 @Module({
 	imports: [
@@ -19,5 +20,9 @@ import { SunBootModule } from '@solar-system/god';
 	controllers: [AuthController],
 	providers: [AuthService],
 })
-export class AuthModule {
+export class AuthModule implements NestModule {
+	configure(consumer: MiddlewareConsumer): any {
+		MorganMiddleware.configure('dev');
+		consumer.apply(MorganMiddleware).forRoutes('*');
+	}
 }

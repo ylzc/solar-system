@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ProxyController } from './controllers/proxy.controller';
 import { ProxyService } from './services/proxy.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -8,6 +8,7 @@ import { PoolService } from './services/pool.service';
 import { CenterController } from './controllers/center.controller';
 import { RedisModule } from 'nestjs-redis';
 import { redisUrl } from './utils';
+import { MorganMiddleware } from '@nest-middlewares/morgan';
 
 @Module({
 	imports: [
@@ -33,5 +34,9 @@ import { redisUrl } from './utils';
 		PoolService,
 	],
 })
-export class ProxyModule {
+export class ProxyModule implements NestModule {
+	configure(consumer: MiddlewareConsumer): any {
+		MorganMiddleware.configure('dev');
+		consumer.apply(MorganMiddleware).forRoutes('*');
+	}
 }

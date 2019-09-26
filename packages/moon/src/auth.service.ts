@@ -18,7 +18,8 @@ export class AuthService implements OnModuleInit {
 	async onModuleInit(): Promise<void> {
 		this.adapter = await TypeORMAdapter.newAdapter({
 			type: 'postgres',
-			host: process.env.DB_HOST || '172.18.0.127',
+			host: process.env.DB_HOST || '127.0.0.1',
+			port: Number(process.env.DB_PORT) || 5432,
 			database: 'postgres',
 			username: 'postgres',
 			schema: 'public',
