@@ -9,6 +9,8 @@ import { CenterController } from './controllers/center.controller';
 import { RedisModule } from 'nestjs-redis';
 import { redisUrl } from './utils';
 import { MorganMiddleware } from '@nest-middlewares/morgan';
+import { ConfigController } from './controllers/config.controller';
+import { ConfigService } from './services/config.service';
 
 @Module({
 	imports: [
@@ -28,10 +30,12 @@ import { MorganMiddleware } from '@nest-middlewares/morgan';
 			}),
 	],
 	controllers: [
+		ConfigController,
 		CenterController,
 		ProxyController,
 	],
 	providers: [
+		ConfigService,
 		ProxyService,
 		CenterService,
 		PoolService,
