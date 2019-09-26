@@ -17,6 +17,9 @@ import { MorganMiddleware } from '@nest-middlewares/morgan';
 				{
 					name: REDIS_MICRO_CLIENT,
 					transport: Transport.REDIS,
+					options: {
+						url: redisUrl,
+					},
 				},
 			]),
 		RedisModule

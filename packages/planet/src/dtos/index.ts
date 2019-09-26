@@ -6,3 +6,4 @@ export * from './set-permission.dto';
 export * from './set-role.dto';
 export * from './validate-user.dto';
 export * from './register-service.dto';
+export * from './offline.service.dto';

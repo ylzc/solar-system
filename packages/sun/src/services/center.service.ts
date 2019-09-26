@@ -1,6 +1,9 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy, ClientRedis } from '@nestjs/microservices';
-import { logger, REDIS_MICRO_CLIENT, REFRESH_CONFIG, REFRESH_SERVICE, RegisterServiceDto } from '@solar-system/planet';
+import {
+	logger, OfflineServiceDto, REDIS_MICRO_CLIENT, REFRESH_CONFIG,
+	REFRESH_SERVICE, RegisterServiceDto,
+} from '@solar-system/planet';
 import { RedisService } from 'nestjs-redis';
 import { Redis } from 'ioredis';
 
@@ -23,6 +26,7 @@ export class CenterService {
 	}
 
 	async publishServiceEvent(data: any) {
+		logger.log(`Emit ${REFRESH_SERVICE}`, 'SolarSystem');
 		this.client.emit(REFRESH_SERVICE, data);
 	}
 
@@ -44,6 +48,24 @@ export class CenterService {
 		});
 		return {
 			message: '服务设置成功',
+		};
+	}
+
+	async offline(params: OfflineServiceDto) {
+		const k = 'sun:service:' + params.prefix;
+		await this.redis.hdel(k, params.target);
+		const len = await this.redis.hlen(k);
+		if (len === 0) {
+			await this.redis.srem('sun:service:list', params.prefix);
+		}
+		const data = await this.getSrvConfig(params.prefix);
+		this.publishServiceEvent({
+			action: 'remove',
+			prefix: params.prefix,
+			data,
+		});
+		return {
+			message: `${params.prefix}@${params.target}服务已下线`,
 		};
 	}
 
