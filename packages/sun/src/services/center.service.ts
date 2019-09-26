@@ -56,7 +56,7 @@ export class CenterService {
 		return temp;
 	}
 
-	async list() {
+	async list(): Promise<Array<{ prefix: string, target: string, weight?: number }>> {
 		const sevList: string[] = await this.redis.smembers('sun:service:list');
 		let temp = [];
 		for (let i = 0, l = sevList.length; i < l; i++) {

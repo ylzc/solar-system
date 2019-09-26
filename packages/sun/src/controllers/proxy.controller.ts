@@ -1,13 +1,12 @@
-import { All, Controller, Get, Param, Req, Res } from '@nestjs/common';
+import { All, Controller, Get, Inject, Param, Req, Res } from '@nestjs/common';
 import { ProxyService } from '../services/proxy.service';
 import { Response, Request } from 'express';
 
 @Controller()
 export class ProxyController {
-	constructor(
-		private readonly proxyService: ProxyService,
-	) {
-	}
+
+	@Inject(ProxyService)
+	private readonly proxyService: ProxyService;
 
 	@All(':id')
 	proxy(
@@ -15,6 +14,6 @@ export class ProxyController {
 		@Res() res: Response,
 		@Param('id') id: string,
 	) {
-		this.proxyService.web(res, res, id);
+		this.proxyService.web(req, res, id);
 	}
 }

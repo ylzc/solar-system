@@ -1,18 +1,30 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { CenterService } from './center.service';
 import * as HttpProxy from 'http-proxy';
 import { Response, Request } from 'express';
+import { PoolService } from './pool.service';
 
 @Injectable()
-export class ProxyService {
+export class ProxyService implements OnModuleInit {
+
+	private readonly proxy: HttpProxy;
 
 	@Inject(CenterService)
 	private readonly center: CenterService;
 
-	private readonly proxy: HttpProxy;
+	@Inject(PoolService)
+	private readonly pool: PoolService;
 
 	constructor() {
 		this.proxy = new HttpProxy({ ws: true, changeOrigin: true });
+	}
+
+	async onModuleInit(): Promise<any> {
+		const list = await this.center.list();
+		list.forEach(item => {
+			this.pool.setPool(item.prefix, [item]);
+		});
+		return true;
 	}
 
 	private onError(err: Error, req: Request, res: Response, target?: string) {
@@ -23,15 +35,12 @@ export class ProxyService {
 			});
 	}
 
-	web(request: any, response: any, id: string, options?: {}): void {
-		const config = options ? options : {};
+	web(request: Request, response: Response, id: string, options?: HttpProxy.ServerOptions): void {
+		const config: HttpProxy.ServerOptions = options ? options : {};
+		config.target = this.pool.next(id);
+		request.url = id + request.url;
 		try {
-			this.proxy.web(
-				request,
-				response,
-				config,
-				this.onError,
-			);
+			this.proxy.web(request, response, config, this.onError);
 		} catch (e) {
 			Logger.error(e.message, null, 'SolarSystem');
 			this.onError(e, request, response);

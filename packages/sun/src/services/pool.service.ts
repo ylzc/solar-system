@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as WrrPool from 'wrr-pool';
 
 @Injectable()
@@ -38,10 +38,12 @@ export class PoolService {
 	next(id) {
 		const pool = this.pools.get(id);
 		if (pool) {
-			return pool.next();
-		} else {
-			return null;
+			const next = pool.next();
+			if (next) {
+				return next;
+			}
 		}
+		throw new HttpException('服务不存在', HttpStatus.NOT_FOUND);
 	}
 
 }

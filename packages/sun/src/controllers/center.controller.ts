@@ -1,4 +1,4 @@
-import { All, Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import { All, Body, Controller, Get, Inject, Param, Post, Query } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { logger, REFRESH_CONFIG, REFRESH_SERVICE, RegisterServiceDto } from '@solar-system/planet';
 import { CenterService } from '../services/center.service';
@@ -27,11 +27,21 @@ export class CenterController {
 
 	@Post('register')
 	async register(@Body() params: RegisterServiceDto) {
-		return this.center.register(params);
+		return await this.center.register(params);
 	}
 
 	@Get('list')
 	async list() {
-		return this.center.list();
+		return await this.center.list();
+	}
+
+	@Get('service/:id')
+	async getService(@Param('id') id: string) {
+		return await this.center.getSrvConfig(id);
+	}
+
+	@Get('next/:id')
+	async getNest(@Param('id') id: string) {
+		return this.pools.next(id);
 	}
 }
