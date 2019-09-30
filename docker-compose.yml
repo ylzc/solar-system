@@ -1,0 +1,88 @@
+version: '3'
+services:
+  venus:
+    build:
+      context: ./packages/venus/
+      dockerfile: ./packages/venus/Dockerfile
+    image: @solar-system/venus
+    depends_on:
+      - postgres
+      - redis
+      - sun
+    networks:
+      - solar-system
+
+  moon:
+    build:
+      context: ./packages/moon/
+      dockerfile: ./packages/moon/Dockerfile
+    image: @solar-system/moon
+    depends_on:
+      - postgres
+      - redis
+      - sun
+    networks:
+      - solar-system
+  mercury:
+    build:
+      context: ./packages/mercury/
+      dockerfile: ./packages/mercury/Dockerfile
+    image: @solar-system/mercury
+    depends_on:
+      - postgres
+      - redis
+      - sun
+    networks:
+      - solar-system
+  mars:
+    build:
+      context: ./packages/mars/
+      dockerfile: ./packages/mars/Dockerfile
+    image: @solar-system/mars
+    depends_on:
+      - postgres
+      - redis
+      - sun
+    networks:
+      - solar-system
+  earth:
+    build:
+      context: ./packages/earth/
+      dockerfile: ./packages/earth/Dockerfile
+    image: @solar-system/earth
+    depends_on:
+      - postgres
+      - redis
+      - sun
+    networks:
+      - solar-system
+  sun:
+    build:
+      context: ./packages/sun/
+      dockerfile: ./packages/sun/Dockerfile
+    image: @solar-system/sun
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3434:3434"
+    networks:
+      - solar-system
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+    networks:
+      - solar-system
+  redis:
+    image: redis:latest
+    restart: always
+    environment:
+    command:
+      redis-server
+    networks:
+      - solar-system
+
+networks:
+  solar-system:
+    driver: bridge
