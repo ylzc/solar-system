@@ -11,7 +11,6 @@ services:
       - sun
     networks:
       - solar-system
-
   moon:
     build:
       context: ./packages/moon/
