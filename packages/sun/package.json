@@ -20,13 +20,16 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nest-middlewares/morgan": "^6.0.0",
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/microservices": "^6.7.1",
     "@nestjs/platform-express": "^6.0.0",
     "@nestjs/platform-ws": "^6.7.1",
+    "@nestjs/swagger": "^3.1.0",
     "@nestjs/websockets": "^6.7.1",
     "@solar-system/planet": "^1.0.0",
+    "express": "^4.17.1",
     "http-proxy": "^1.18.0",
     "nestjs-redis": "^1.2.3",
     "redis": "^2.8.0",
@@ -34,12 +37,9 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
-    "wrr-pool": "^1.1.4",
-    "ws": "^7.1.2",
     "swagger-ui-express": "^4.1.1",
-    "express": "^4.17.1",
-    "@nestjs/swagger": "^3.1.0",
-    "@nest-middlewares/morgan": "^6.0.0"
+    "wrr-pool": "^1.1.4",
+    "ws": "^7.1.2"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
